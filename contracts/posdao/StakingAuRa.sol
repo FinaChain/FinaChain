@@ -1,5 +1,5 @@
 pragma solidity 0.5.10;
 
-import "./base/StakingAuRaCoins.sol";
+import "./base/StakingAuRaTokens.sol";
 
-contract StakingAuRa is StakingAuRaCoins {}
+contract StakingAuRa is StakingAuRaTokens {}
