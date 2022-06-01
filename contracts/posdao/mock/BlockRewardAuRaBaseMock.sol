@@ -1,6 +1,7 @@
 pragma solidity 0.5.10;
 
-import "../base/BlockRewardAuRaBase.sol";
+import '../../contracts/base/BlockRewardAuRaBase.sol';
+
 
 contract BlockRewardAuRaBaseMock is BlockRewardAuRaBase {
 

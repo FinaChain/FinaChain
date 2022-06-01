@@ -1,7 +1,7 @@
 pragma solidity 0.5.10;
 pragma experimental ABIEncoderV2;
 
-import "../TxPriority.sol";
+import '../../contracts/TxPriority.sol';
 
 
 contract TxPriorityMock is TxPriority {

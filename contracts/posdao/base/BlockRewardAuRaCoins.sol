@@ -2,28 +2,18 @@ pragma solidity 0.5.10;
 
 import "./BlockRewardAuRaBase.sol";
 import "../interfaces/IBlockRewardAuRaCoins.sol";
-import "../interfaces/IAgora.sol";
+
 
 contract BlockRewardAuRaCoins is BlockRewardAuRaBase, IBlockRewardAuRaCoins {
 
     // ============================================== Constants =======================================================
 
     /// @dev Inflation rate per staking epoch. Calculated as follows:
-    /// 10% annual rate * 52 staking weeks per staking year / 100 * 10**18
+    /// 2.5% annual rate * 48 staking weeks per staking year / 100 * 10**18
     /// This assumes that 1 staking epoch = 1 week
-    /// i.e. Inflation Rate = 10/52/100 * 1 ether
+    /// i.e. Inflation Rate = 2.5/48/100 * 1 ether
     /// Recalculate it for different annual rate and/or different staking epoch duration.
-
-    // ============ POLIS MODIFICATIONS: START =============== //
-
-    /// Polis specific inflation rate. This assumes at least 30% of the totalSupply is being used
-    /// for validators and delegates and secures 20 years of inflation before reaching the max total
-    /// supply of 25m coins.
-
-    uint256 public constant NATIVE_COIN_INFLATION_RATE = 1923076923077000;
-
-    // ============ POLIS MODIFICATIONS: END =============== //
-
+    uint256 public constant NATIVE_COIN_INFLATION_RATE = 520833333333333;
 
     // =============================================== Setters ========================================================
 
@@ -31,20 +21,9 @@ contract BlockRewardAuRaCoins is BlockRewardAuRaBase, IBlockRewardAuRaCoins {
     /// from the balance of the `BlockRewardAuRa` contract to the specified address as a reward.
     /// @param _nativeCoins The amount of native coins to transfer as a reward.
     /// @param _to The target address to transfer the amounts to.
-
-    // ============ POLIS MODIFICATIONS: START =============== //
-    // Polis modification for the transferReward funtion to pay the Agora before paying the user.
-    // The contract will call the Agora.deposit() function with the 20% of the amount specified
-    //  in the _nativeCoins param and reduce the amount passed to _transferNativeReward by 20%
-
     function transferReward(uint256 _nativeCoins, address payable _to) external onlyStakingContract {
-        uint256 agora_reward = _nativeCoins.mul(AGORA_REWARD_PERCENTAGE).div(100);
-        IAgora(AGORA_ADDRESS).deposit.value(agora_reward)();
-        uint256 reward = _nativeCoins.sub(agora_reward);
-        _transferNativeReward(reward, _to);
+        _transferNativeReward(_nativeCoins, _to);
     }
-
-    // ============ POLIS MODIFICATIONS: END =============== //
 
     // =============================================== Getters ========================================================
 
@@ -70,7 +49,6 @@ contract BlockRewardAuRaCoins is BlockRewardAuRaBase, IBlockRewardAuRaCoins {
             totalStake,
             epochPoolNativeReward[_stakingEpoch][_poolId]
         );
-
     }
 
     /// @dev Returns the reward amount in native coins for

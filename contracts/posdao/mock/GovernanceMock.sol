@@ -1,6 +1,7 @@
 pragma solidity 0.5.10;
 
-import "../Governance.sol";
+import '../../contracts/Governance.sol';
+
 
 contract GovernanceMock is Governance {
 

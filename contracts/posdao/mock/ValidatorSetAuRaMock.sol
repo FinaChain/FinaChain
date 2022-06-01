@@ -1,6 +1,6 @@
 pragma solidity 0.5.10;
 
-import "../ValidatorSetAuRa.sol";
+import '../../contracts/ValidatorSetAuRa.sol';
 
 
 contract ValidatorSetAuRaMock is ValidatorSetAuRa {

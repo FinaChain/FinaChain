@@ -1,7 +1,7 @@
 pragma solidity 0.5.10;
 
 import './StakingAuRaBaseMock.sol';
-import "../base/StakingAuRaTokens.sol";
+import '../../contracts/base/StakingAuRaTokens.sol';
 
 
 contract StakingAuRaTokensMock is StakingAuRaTokens, StakingAuRaBaseMock {

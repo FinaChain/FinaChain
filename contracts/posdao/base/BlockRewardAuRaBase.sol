@@ -17,7 +17,7 @@ contract Sacrifice {
 
 
 /// @dev Generates and distributes rewards according to the logic and formulas described in the POSDAO white paper.
-contract BlockRewardAuRaBase is UpgradeableOwned {
+contract BlockRewardAuRaBase is UpgradeableOwned, IBlockRewardAuRa {
     using SafeMath for uint256;
 
     // =============================================== Storage ========================================================
@@ -106,19 +106,6 @@ contract BlockRewardAuRaBase is UpgradeableOwned {
 
     // Reserved storage slots to allow for layout changes in the future.
     uint256[25] private ______gapForPublic;
-
-
-    // ============ POLIS MODIFICATIONS: STARTS =============== //
-
-    // Agora address receives AGORA_REWARD_PERCENTAGE of the block rewards for a community treasury.
-    address public AGORA_ADDRESS;
-
-    // Agora percentage reward to the community treasury.
-    uint256 public constant AGORA_REWARD_PERCENTAGE = 20;
-
-    // ============ POLIS MODIFICATIONS: END =============== //
-
-
 
     // ================================================ Events ========================================================
 
@@ -228,25 +215,14 @@ contract BlockRewardAuRaBase is UpgradeableOwned {
     /// @param _validatorSet The address of the `ValidatorSetAuRa` contract.
     /// @param _prevBlockReward The address of the previous BlockReward contract
     /// (for statistics migration purposes).
-
-    // ============ POLIS MODIFICATIONS: STARTS =============== //
-
-    // Polis initialization requires an extra param for the agora address;
-    /// @param _agora The the address that will receive the specified percentage
-
-    function initialize(address _validatorSet, address _prevBlockReward, address _agora) external {
+    function initialize(address _validatorSet, address _prevBlockReward) external {
         require(_getCurrentBlockNumber() == 0 || msg.sender == _admin());
         require(!isInitialized());
         require(_validatorSet != address(0));
-        require(_agora != address(0));
-        AGORA_ADDRESS = _agora;
         validatorSetContract = IValidatorSetAuRa(_validatorSet);
         validatorMinRewardPercent[0] = VALIDATOR_MIN_REWARD_PERCENT;
         _prevBlockRewardContract = IBlockRewardAuRa(_prevBlockReward);
-
     }
-
-    // ============ POLIS MODIFICATIONS: END =============== //
 
     /// @dev Called by the validator's node when producing and closing a block,
     /// see https://openethereum.github.io/Block-Reward-Contract.html.
@@ -355,16 +331,6 @@ contract BlockRewardAuRaBase is UpgradeableOwned {
         // Mint native coins if needed
         return _mintNativeCoins(nativeTotalRewardAmount, bridgeQueueLimit);
     }
-
-    // ============ POLIS MODIFICATIONS: START =============== //
-    /// @dev Sets the AGORA_ADDRESS address to receive coins and fund addresses
-    /// @param _agora Agora new address.
-    function setAgoraAddress(address _agora) external onlyOwner onlyInitialized {
-        AGORA_ADDRESS = _agora;
-    }
-
-    // ============ POLIS MODIFICATIONS: END =============== //
-
 
     /// @dev Sets the array of `erc-to-native` bridge addresses which are allowed to call some of the functions with
     /// the `onlyErcToNativeBridge` modifier. This setter can only be called by the `owner`.
@@ -670,12 +636,7 @@ contract BlockRewardAuRaBase is UpgradeableOwned {
 
     // ============================================== Internal ========================================================
 
-    // ============ POLIS MODIFICATIONS: START =============== //
-
-    // Polis changes the minimum reward for validators to 50%
-    uint256 internal constant VALIDATOR_MIN_REWARD_PERCENT = 50; // 50%
-    // ============ POLIS MODIFICATIONS: END =============== //
-
+    uint256 internal constant VALIDATOR_MIN_REWARD_PERCENT = 0; // 0%
     uint256 internal constant REWARD_PERCENT_MULTIPLIER = 1000000;
 
     function _coinInflationAmount(uint256, uint256[] memory) internal view returns(uint256);
