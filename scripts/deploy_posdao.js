@@ -174,11 +174,14 @@ async function main() {
     )
     await tx.wait()
 	
-	console.log("Mint and stake initial tokens...");
+	console.log("Mint and stake initial tokens");
 	const mintAmount = (new BN(process.env.CANDIDATE_MIN_STAKE)).mul(new BN(initial_stakers.length))
 	tx = await erc677BridgeTokenRewardable.mint(stakingProxy.address, mintAmount.toString(10))
 	await tx.wait()
 	
+	console.log("Setting initial validator stakes");	
+	tx = await stakingProxyAccess.initialValidatorStake(mintAmount.toString(10))
+	await tx.wait()
 
     console.log("==> Setting POSDAO ownership to DAO multi-signature account")
     tx = await validatorSetProxy.changeAdmin(DAO_MULTISIG)
