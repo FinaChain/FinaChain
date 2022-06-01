@@ -3,17 +3,20 @@ const Web3 = require('web3');
 const BN = Web3.utils.BN;
 
 const DAO_MULTISIG = process.env.DAO_MULTISIG;
-const AGORA = process.env.AGORA;
 
 async function main() {
     const [owner] = await hre.ethers.getSigners();
 
     let initial_miners = process.env.INITIAL_MINERS.split(",")
     let initial_stakers = process.env.INITIAL_STAKERS.split(",")
+    let initial_certified = initial_miners.concat(initial_stakers);    
+    initial_certified.push(owner.address);
+    
 
     console.log("\n POSDAO Config: \n")
     console.log("Initial Miners:                    ", JSON.stringify(initial_miners))
     console.log("Initial Stakers:                   ", JSON.stringify(initial_stakers))
+    console.log("Initial Certified:                 ", JSON.stringify(initial_certified))	
     console.log("First Validator unremovable:       ", process.env.FIRST_VALIDATOR_UNREMOVABLE)
     console.log("Delegator Minimum Stake:           ", process.env.DELEGATOR_MIN_STAKE, "wei")
     console.log("Candidate Minimum Stake:           ", process.env.CANDIDATE_MIN_STAKE, "wei")
@@ -21,10 +24,10 @@ async function main() {
     console.log("Epoch Start Block:                 ", process.env.EPOCH_START_BLOCK)
     console.log("Stake withdrawal disallow period:  ", process.env.STAKE_WITHDRAWAL_DISALLOW_PERIOD, "blocks")
     console.log("Collect round length:              ", process.env.COLLECT_ROUND_LENGTH, "blocks")
-	console.log("Token name:                 		", process.env.TOKEN_NAME)
-	console.log("Token symbol:                 		", process.env.TOKEN_SYMBOL)
-	console.log("Token decimals:                 	", process.env.TOKEN_DECIMALS)
-	console.log("ChainId:                 			", process.env.CHAIN_ID)
+    console.log("Token name:                        ", process.env.TOKEN_NAME)
+    console.log("Token symbol:                      ", process.env.TOKEN_SYMBOL)
+    console.log("Token decimals:                    ", process.env.TOKEN_DECIMALS)
+    console.log("ChainId:                           ", process.env.CHAIN_ID)
 
     console.log("\n ==> Deploying Contracts \n")
 
@@ -36,7 +39,7 @@ async function main() {
     const TxPermission = await hre.ethers.getContractFactory("TxPermission");
     const Certifier = await hre.ethers.getContractFactory("Certifier");
     const Registry = await hre.ethers.getContractFactory("Registry");
-	const ERC677BridgeTokenRewardable = await hre.ethers.getContractFactory("ERC677BridgeTokenRewardable");
+    const ERC677BridgeTokenRewardable = await hre.ethers.getContractFactory("ERC677BridgeTokenRewardable");
 
     const Proxy = await hre.ethers.getContractFactory("AdminUpgradeabilityProxy");
 
@@ -87,10 +90,10 @@ async function main() {
     console.log("Deploying Registry")
     let registry = await Registry.deploy(certifierProxy.address, owner.address)
     await registry.deployed()
-	
+    
 
-	console.log("Deploying ERC677BridgeTokenRewardable")
-	let erc677BridgeTokenRewardable = await ERC677BridgeTokenRewardable.deploy(process.env.TOKEN_NAME, process.env.TOKEN_SYMBOL, process.env.TOKEN_DECIMALS, process.env.CHAIN_ID)
+    console.log("Deploying ERC677BridgeTokenRewardable")
+    let erc677BridgeTokenRewardable = await ERC677BridgeTokenRewardable.deploy(process.env.TOKEN_NAME, process.env.TOKEN_SYMBOL, process.env.TOKEN_DECIMALS, process.env.CHAIN_ID)
     await erc677BridgeTokenRewardable.deployed()
 
     console.log("\n ==> Initializing POSDAO contracts \n")
@@ -112,8 +115,7 @@ async function main() {
     const blockRewardProxyAccess = BlockRewardAuRa.attach(blockRewardProxy.address)
     tx = await blockRewardProxyAccess.initialize(
         validatorSetProxy.address,
-        owner.address,
-        AGORA
+        '0x0000000000000000000000000000000000000000'
     )
     await tx.wait()
 
@@ -146,9 +148,9 @@ async function main() {
         process.env.STAKE_WITHDRAWAL_DISALLOW_PERIOD
     )
     await tx.wait()
-	
-	tx = await stakingProxyAccess.setErc677TokenContract(erc677BridgeTokenRewardable.address)
-	await tx.wait()
+    
+    tx = await stakingProxyAccess.setErc677TokenContract(erc677BridgeTokenRewardable.address)
+    await tx.wait()
 
     console.log("Initializing Governance")
     const governanceProxyAccess = Governance.attach(governanceProxy.address)
@@ -169,19 +171,19 @@ async function main() {
     console.log("Initializing Certifier")
     const certifierProxyAccess = Certifier.attach(certifierProxy.address)
     tx = await certifierProxyAccess.initialize(
-        [owner.address],
+        initial_certified,
         validatorSetProxy.address
     )
     await tx.wait()
-	
-	console.log("Mint and stake initial tokens");
-	const mintAmount = (new BN(process.env.CANDIDATE_MIN_STAKE)).mul(new BN(initial_stakers.length))
-	tx = await erc677BridgeTokenRewardable.mint(stakingProxy.address, mintAmount.toString(10))
-	await tx.wait()
-	
-	console.log("Setting initial validator stakes");	
-	tx = await stakingProxyAccess.initialValidatorStake(mintAmount.toString(10))
-	await tx.wait()
+    
+    console.log("Mint and stake initial tokens");
+    const mintAmount = (new BN(process.env.CANDIDATE_MIN_STAKE)).mul(new BN(initial_stakers.length))
+    tx = await erc677BridgeTokenRewardable.mint(stakingProxy.address, mintAmount.toString(10))
+    await tx.wait()
+    
+    console.log("Setting initial validator stakes");    
+    tx = await stakingProxyAccess.initialValidatorStake(mintAmount.toString(10))
+    await tx.wait()
 
     console.log("==> Setting POSDAO ownership to DAO multi-signature account")
     tx = await validatorSetProxy.changeAdmin(DAO_MULTISIG)
@@ -210,15 +212,14 @@ async function main() {
 
     console.log("\n AuRa Deployment Finished: \n")
     console.log("Please add the following information to the chain spec json:")
-    console.log("ValidatorAuRa:     				", validatorSetProxy.address)
-    console.log("StakingAuRa:       				", stakingProxy.address)
-    console.log("BlockRewardAuRa:   				", blockRewardProxy.address)
-    console.log("TxPermission:      				", txPermissionProxy.address)
-    console.log("Registry:          				", registry.address)
-    console.log("Epoch Start Block: 				", process.env.EPOCH_START_BLOCK)
-    console.log("RandomAuRa:        				", randomProxy.address)
-	console.log("ERC677BridgeTokenRewardable:		", erc677BridgeTokenRewardable.address)
-	
+    console.log("ValidatorAuRa:                     ", validatorSetProxy.address)
+    console.log("StakingAuRa:                       ", stakingProxy.address)
+    console.log("BlockRewardAuRa:                   ", blockRewardProxy.address)
+    console.log("TxPermission:                      ", txPermissionProxy.address)
+    console.log("Registry:                          ", registry.address)
+    console.log("Epoch Start Block:                 ", process.env.EPOCH_START_BLOCK)
+    console.log("RandomAuRa:                        ", randomProxy.address)
+    console.log("ERC677BridgeTokenRewardable:       ", erc677BridgeTokenRewardable.address)    
 }
 
 main()
