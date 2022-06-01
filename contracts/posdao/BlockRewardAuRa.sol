@@ -1,5 +1,5 @@
 pragma solidity 0.5.10;
 
-import "./base/BlockRewardAuRaCoins.sol";
+import "./base/BlockRewardAuRaTokens.sol";
 
-contract BlockRewardAuRa is BlockRewardAuRaCoins {}
+contract BlockRewardAuRa is BlockRewardAuRaTokens {}

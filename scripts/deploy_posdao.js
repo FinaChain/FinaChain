@@ -88,7 +88,7 @@ async function main() {
 	
 
 	console.log("Deploying ERC677BridgeTokenRewardable")
-	let erc677BridgeTokenRewardable = await ERC677BridgeTokenRewardable.deploy(process.env.TOKEN_NAME, process.env.TOKEN_SYMBOL, process.env.TOKEN_DECIMALS, process.env.CHAIN_ID, owner.address)
+	let erc677BridgeTokenRewardable = await ERC677BridgeTokenRewardable.deploy(process.env.TOKEN_NAME, process.env.TOKEN_SYMBOL, process.env.TOKEN_DECIMALS, process.env.CHAIN_ID)
     await erc677BridgeTokenRewardable.deployed()
 
     console.log("\n ==> Initializing POSDAO contracts \n")
