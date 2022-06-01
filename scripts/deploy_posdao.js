@@ -19,6 +19,10 @@ async function main() {
     console.log("Epoch Start Block:                 ", process.env.EPOCH_START_BLOCK)
     console.log("Stake withdrawal disallow period:  ", process.env.STAKE_WITHDRAWAL_DISALLOW_PERIOD, "blocks")
     console.log("Collect round length:              ", process.env.COLLECT_ROUND_LENGTH, "blocks")
+	console.log("Token name:                 		", process.env.TOKEN_NAME)
+	console.log("Token symbol:                 		", process.env.TOKEN_SYMBOL)
+	console.log("Token decimals:                 	", process.env.TOKEN_DECIMALS)
+	console.log("ChainId:                 			", process.env.CHAIN_ID)
 
     console.log("\n ==> Deploying Contracts \n")
 
@@ -30,6 +34,7 @@ async function main() {
     const TxPermission = await hre.ethers.getContractFactory("TxPermission");
     const Certifier = await hre.ethers.getContractFactory("Certifier");
     const Registry = await hre.ethers.getContractFactory("Registry");
+	const ERC677BridgeTokenRewardable = await hre.ethers.getContractFactory("ERC677BridgeTokenRewardable");
 
     const Proxy = await hre.ethers.getContractFactory("AdminUpgradeabilityProxy");
 
@@ -80,6 +85,11 @@ async function main() {
     console.log("Deploying Registry")
     let registry = await Registry.deploy(certifierProxy.address, owner.address)
     await registry.deployed()
+	
+
+	console.log("Deploying ERC677BridgeTokenRewardable")
+	let erc677BridgeTokenRewardable = await ERC677BridgeTokenRewardable.deploy(process.env.TOKEN_NAME, process.env.TOKEN_SYMBOL, process.env.TOKEN_DECIMALS, process.env.CHAIN_ID, owner.address)
+    await erc677BridgeTokenRewardable.deployed()
 
     console.log("\n ==> Initializing POSDAO contracts \n")
 
@@ -134,6 +144,9 @@ async function main() {
         process.env.STAKE_WITHDRAWAL_DISALLOW_PERIOD
     )
     await tx.wait()
+	
+	tx = stakingProxyAccess.setErc677TokenContract(erc677BridgeTokenRewardable.address)
+	await tx.wait()
 
     console.log("Initializing Governance")
     const governanceProxyAccess = Governance.attach(governanceProxy.address)
@@ -186,13 +199,15 @@ async function main() {
 
     console.log("\n AuRa Deployment Finished: \n")
     console.log("Please add the following information to the chain spec json:")
-    console.log("ValidatorAuRa:     ", validatorSetProxy.address)
-    console.log("StakingAuRa:       ", stakingProxy.address)
-    console.log("BlockRewardAuRa:   ", blockRewardProxy.address)
-    console.log("TxPermission:      ", txPermissionProxy.address)
-    console.log("Registry:          ", registry.address)
-    console.log("Epoch Start Block: ", process.env.EPOCH_START_BLOCK)
-    console.log("RandomAuRa:        ", randomProxy.address)
+    console.log("ValidatorAuRa:     				", validatorSetProxy.address)
+    console.log("StakingAuRa:       				", stakingProxy.address)
+    console.log("BlockRewardAuRa:   				", blockRewardProxy.address)
+    console.log("TxPermission:      				", txPermissionProxy.address)
+    console.log("Registry:          				", registry.address)
+    console.log("Epoch Start Block: 				", process.env.EPOCH_START_BLOCK)
+    console.log("RandomAuRa:        				", randomProxy.address)
+	console.log("ERC677BridgeTokenRewardable:		", erc677BridgeTokenRewardable.address)
+	
 }
 
 main()
