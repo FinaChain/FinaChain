@@ -7,16 +7,10 @@ let private_key = process.env.PRIVATE_KEY;
 module.exports = {
     networks: {
         hardhat: {},
-        sparta: {
-            chainId: 333888,
-            gasPrice: 1000000000,
-            url: "https://sparta-rpc.polis.tech",
-            accounts: [private_key]
-        },
-        olympus: {
-            chainId: 333999,
-            gasPrice: 1000000000,
-            url: "https://rpc.polis.tech",
+        production: {
+            chainId: 40101,
+            gasPrice: 2000000000,
+            url: "https://rpc.finachain.com",
             accounts: [private_key]
         }
     },

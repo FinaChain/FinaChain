@@ -1,17 +1,16 @@
 {
-  "name": "polis-chains-spec",
+  "name": "FinaChain",
   "version": "1.0.0",
-  "description": "Polis networks specification files",
-  "repository": "https://github.com/eabz/polis-chains-spec.git",
-  "author": "eabz <eabz@polispay.org>",
+  "description": "FinaChain blockchain repository",
+  "repository": "https://github.com/FinaChain/FinaChain",
+  "author": "Kees de Wit <kees@fina.email>",
   "license": "MIT",
   "private": false,
   "scripts": {
     "compile": "hardhat compile",
     "flat": "bash scripts/flat.sh",
     "deploy:test": "hardhat run --network hardhat scripts/deploy_posdao.js",
-    "deploy:sparta": "hardhat run --network sparta scripts/deploy_posdao.js",
-    "deploy:olympus": "hardhat run --network olympus scripts/deploy_posdao.js"
+    "deploy:production": "hardhat run --network production scripts/deploy_posdao.js"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "2.0.2",
