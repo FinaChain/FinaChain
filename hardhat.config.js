@@ -10,6 +10,7 @@ module.exports = {
         production: {
             chainId: 40101,
             gasPrice: 2000000000,
+            gas: 3000000,
             url: "https://rpc.finachain.com",
             accounts: [private_key]
         }
