@@ -13,12 +13,32 @@
               "list": [
                 "0x520104fcb9bbf905eb61cfbe97168854fdcbd1cf"
               ]
+            },
+            "200": {
+              "contract": "0x278036D0D2C86c26Fd4F54cE4Db418E0d9F6B1E5"
             }
           }
-        }
+        },
+        "blockRewardContractAddress": "0x560c2F0E96834D9ACD428c63Fc881eEB6274EB4A",
+        "blockRewardContractTransition": 200,
+        "randomnessContractAddress": {
+          "200": "0x89b9C0bF4A40F240576576bEF1e17bdc55E3Dcb7"
+        },
+        "posdaoTransition": 200
       }
     }
   },
+  "nodes": [
+        "enode://77b32531f69107601db85f404fbc8bcf22a7d7593731d7cf7394cb2576eab958569d5e001debef7e306c961659cc4aa145776345aa0b2920bfa614bc979c817e@38.242.246.113:40101",
+        "enode://060c8fe9f851709c9ca9c117f809f16dc099e15494e0356d12a3602596624e36e6285d5304e78bdee8498062958b7de91fa2b71277ea831c204891d460c9801c@154.12.240.73:40101",
+        "enode://6c3d50bca32f9e429e2dd0634b0c5c62084224ca05f14d698cd772f4bf76655dca7a3d5f5207c72f232a62e79ecff9f6df100a0caa8a16019515e759ab59fedf@154.12.240.74:40101",
+        "enode://4939634505a36099ff390de3732fd665049d08ea708d540d443ab46782e7bea8b9284f073300f0c3abb532bca97ec022b973738f33fd949ba02430ccbbe58e5d@38.242.246.80:40101",
+        "enode://9663888a35cd9a85a0ae23eca36f417b2951ac894eb7df0d46a552b8eb5181083157be7b9a25c05ef2b6c3360bed30d88398f1ecbfe9e3f5b84da1e6edcf1cf3@38.242.246.82:40101",
+        "enode://5689886354dbef0b8fd934502178ca8dfbd1632c3b3defdc4b0cd65994801f17cc3138812e93337bbd8b72fa0d8c5a8862f16aed0e17c196c421c33908b1e35b@154.12.232.227:40101",
+        "enode://6200eb181c5a3da717580dff2345a0f03fac38e9706e9ea1111873a5388b35c1b3c5c9caca5fec809fce9ffed0aa1d56d1a6d0944cac23af4453ea04b2aea81f@154.12.226.46:40101",
+        "enode://2e7fb532dae6bf109347f0cc13acaff6fd189984e63606a0af9555cea7b908e84f0c74fa857e7a303186774a7efd5165b34ee5d611f2a1440ccf1219d7983350@38.242.246.78:40101",
+        "enode://5689886354dbef0b8fd934502178ca8dfbd1632c3b3defdc4b0cd65994801f17cc3138812e93337bbd8b72fa0d8c5a8862f16aed0e17c196c421c33908b1e35b@154.12.232.227:40101"
+  ],
   "params": {
     "gasLimitBoundDivisor": "0x400",
     "maximumExtraDataSize": "0x20",
@@ -32,25 +52,16 @@
     "eip1014Transition": "0x0",
     "eip1052Transition": "0x0",
     "eip1283Transition": "0x0",
-    "eip1283DisableTransition": "0x0",
-    "eip152Transition": "0x0",
-    "eip1108Transition": "0x0",
-    "eip1283ReenableTransition": "0x0",
     "eip1344Transition": "0x0",
     "eip1706Transition": "0x0",
     "eip1884Transition": "0x0",
     "eip2028Transition": "0x0",
-    "eip2565Transition": "0x0",
     "eip2929Transition": "0x0",
     "eip2930Transition": "0x0",
-    "eip3198Transition": "0x0",
-    "eip3529Transition": "0x0",
-    "eip3541Transition": "0x0",
-    "eip1559Transition": "500",
-    "eip1559BaseFeeMaxChangeDenominator": "0x8",
-    "eip1559ElasticityMultiplier": "0x2",
-    "eip1559BaseFeeInitialValue": "0x3b9aca00",
-    "eip1559FeeCollector": "0xadc7561fee0bc93c002a27c69ab9bc41e692e3df"
+    "eip3607Transition": "0xFFFFFFFFFFFF",
+    "registrar": "0xa34a9b013621F0CFe6C95e4F60a5D94Dce3B07DF",
+    "transactionPermissionContract": "0x03a48496E5a8bD1B3350adaD29b9CC0005f4720A",
+    "transactionPermissionContractTransition": 200
   },
   "genesis": {
     "seal": {
@@ -60,44 +71,26 @@
       }
     },
     "difficulty": "0x20000",
-    "gasLimit": "0x989680"
+    "gasLimit": "0x1312D00"
   },
-  "nodes": [
-    "enode://77b32531f69107601db85f404fbc8bcf22a7d7593731d7cf7394cb2576eab958569d5e001debef7e306c961659cc4aa145776345aa0b2920bfa614bc979c817e@38.242.246.113:40101",
-    "enode://060c8fe9f851709c9ca9c117f809f16dc099e15494e0356d12a3602596624e36e6285d5304e78bdee8498062958b7de91fa2b71277ea831c204891d460c9801c@154.12.240.73:40101",
-    "enode://6c3d50bca32f9e429e2dd0634b0c5c62084224ca05f14d698cd772f4bf76655dca7a3d5f5207c72f232a62e79ecff9f6df100a0caa8a16019515e759ab59fedf@154.12.240.74:40101",
-    "enode://4939634505a36099ff390de3732fd665049d08ea708d540d443ab46782e7bea8b9284f073300f0c3abb532bca97ec022b973738f33fd949ba02430ccbbe58e5d@38.242.246.80:40101",
-    "enode://5689886354dbef0b8fd934502178ca8dfbd1632c3b3defdc4b0cd65994801f17cc3138812e93337bbd8b72fa0d8c5a8862f16aed0e17c196c421c33908b1e35b@154.12.232.227:40101",
-    "enode://9663888a35cd9a85a0ae23eca36f417b2951ac894eb7df0d46a552b8eb5181083157be7b9a25c05ef2b6c3360bed30d88398f1ecbfe9e3f5b84da1e6edcf1cf3@38.242.246.82:40101"  
-  ],
   "accounts": {
-    "0x0000000000000000000000000000000000000005": {
+    "0000000000000000000000000000000000000005": {
       "builtin": {
         "name": "modexp",
         "pricing": {
           "0": {
             "price": {
-              "modexp": {
-                "divisor": 20
-              }
+              "modexp2565": {}
             }
           }
         }
       }
     },
-    "0x0000000000000000000000000000000000000006": {
+    "0000000000000000000000000000000000000006": {
       "builtin": {
         "name": "alt_bn128_add",
         "pricing": {
           "0": {
-            "price": {
-              "alt_bn128_const_operations": {
-                "price": 500
-              }
-            }
-          },
-          "7298030": {
-            "info": "Istanbul HF",
             "price": {
               "alt_bn128_const_operations": {
                 "price": 150
@@ -107,19 +100,11 @@
         }
       }
     },
-    "0x0000000000000000000000000000000000000007": {
+    "0000000000000000000000000000000000000007": {
       "builtin": {
         "name": "alt_bn128_mul",
         "pricing": {
           "0": {
-            "price": {
-              "alt_bn128_const_operations": {
-                "price": 40000
-              }
-            }
-          },
-          "7298030": {
-            "info": "Istanbul HF",
             "price": {
               "alt_bn128_const_operations": {
                 "price": 6000
@@ -129,20 +114,11 @@
         }
       }
     },
-    "0x0000000000000000000000000000000000000008": {
+    "0000000000000000000000000000000000000008": {
       "builtin": {
         "name": "alt_bn128_pairing",
         "pricing": {
           "0": {
-            "price": {
-              "alt_bn128_pairing": {
-                "base": 100000,
-                "pair": 80000
-              }
-            }
-          },
-          "7298030": {
-            "info": "Istanbul HF",
             "price": {
               "alt_bn128_pairing": {
                 "base": 45000,
@@ -157,8 +133,7 @@
       "builtin": {
         "name": "blake2_f",
         "pricing": {
-          "7298030": {
-            "info": "Istanbul HF",
+          "0": {
             "price": {
               "blake2_f": {
                 "gas_per_round": 1
