@@ -849,9 +849,62 @@ contract ERC677MultiBridgeToken is PermittableToken {
     }
 }
 
+contract ERC677MultiBridgeSwapableToken is ERC677MultiBridgeToken {
+  address public swapContract;
+
+  event SwapContractChanged(
+    address indexed previousSwapContract,
+    address indexed newSwapContract
+  );
+
+  constructor(
+      string memory _name,
+      string memory _symbol,
+      uint8 _decimals,
+      uint256 _chainId
+  ) ERC677MultiBridgeToken(_name, _symbol, _decimals, _chainId) public {
+      swapContract = msg.sender;
+  }
+
+  modifier onlySwapContract() {
+    require(msg.sender == swapContract);
+    _;
+  }
+
+
+  function changeSwapContract(address _newSwapContract) public onlyOwner {
+    _changeSwapContract(_newSwapContract);
+  }
+
+
+  function _changeSwapContract(address _newSwapContract) internal {
+    require(_newSwapContract != address(0));
+    emit OwnershipTransferred(swapContract, _newSwapContract);
+    swapContract = _newSwapContract;
+  }
+  
+  event SwapExecuted(
+    address indexed to,
+    uint256 amount
+  );
+  
+  function swap(address _to, uint256 _amount) 
+  public 
+  onlySwapContract
+  returns (bool)
+  {
+    totalSupply_ = totalSupply_.add(_amount);
+    balances[_to] = balances[_to].add(_amount);
+    emit Mint(_to, _amount);
+    emit Transfer(address(0), _to, _amount);
+	emit SwapExecuted(_to, _amount);
+    return true;
+  }
+}
+
 // File: contracts/ERC677BridgeTokenRewardable.sol
 
-contract ERC677BridgeTokenRewardable is ERC677MultiBridgeToken {
+contract ERC677BridgeTokenRewardable is ERC677MultiBridgeSwapableToken {
     address public blockRewardContract;
     address public stakingContract;
 
@@ -860,7 +913,7 @@ contract ERC677BridgeTokenRewardable is ERC677MultiBridgeToken {
         string memory _symbol,
         uint8 _decimals,
         uint256 _chainId
-    ) ERC677MultiBridgeToken(_name, _symbol, _decimals, _chainId) public {
+    ) ERC677MultiBridgeSwapableToken(_name, _symbol, _decimals, _chainId) public {
         // solhint-disable-previous-line no-empty-blocks
     }
 
