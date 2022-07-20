@@ -18,7 +18,7 @@ iterate_sources() {
   files=$(ls "$1"*.sol)
   for file in $files; do
     file_name=$(basename "$file")
-    hardhat flatten "$file" > "$2""$file_name"
+    npx hardhat flatten "$file" > "$2""$file_name"
   done
 }
 
