@@ -1,32 +1,32 @@
 version: '3.7'
 services:
   blockscout:
-    image: ghcr.io/polischain/blockscout:master
+    image: ghcr.io/finachain/blockscout:master
     ports:
       - '4000:4000'
     depends_on:
       - postgres
     environment:
       DATABASE_URL: "postgresql://blockscout:let-me-in@host.docker.internal:5432/blockscout?ssl=false"
-      COIN: "polis"
-      NETWORK: "Polis"
-      SUBNETWORK: "Olympus"
-      LOGO: "/images/polis_logo.svg"
-      BLOCKSCOUT_HOST: "explorer.polis.tech"
-      COINGECKO_COIN_ID: "polis"
+      COIN: "fina"
+      NETWORK: "FinaChain"
+      SUBNETWORK: "Main"
+      LOGO: "/images/fina_logo.svg"
+      BLOCKSCOUT_HOST: "finascan.io"
+      COINGECKO_COIN_ID: "fina"
       VALIDATORS_CONTRACT: "0x636278bAd2D76AAC5E9bAcfd185687c8901063E9"
       TOKEN_BRIDGE_CONTRACT: "0x8B95D92bea3e67796A105c19c524Ee8ef87Bd537"
       HIDE_BLOCK_MINER: "false"
       DISPLAY_TOKEN_ICONS: "true"
       BLOCKSCOUT_PROTOCOL: "https"
       ETHEREUM_JSONRPC_VARIANT: "parity"
-      ETHEREUM_JSONRPC_HTTP_URL: "https://rpc-tracing.polis.tech"
-      ETHEREUM_JSONRPC_TRACE_URL: "https://rpc-tracing.polis.tech"
+      ETHEREUM_JSONRPC_HTTP_URL: "https://rpc.finachain.com"
+      ETHEREUM_JSONRPC_TRACE_URL: "https://rpc.finachain.com"
       SECRET_KEY_BASE: "RMgI4C1HSkxsEjdhtGMfwAHfyT6CKWXOgzCboJflfSm4jeAlic52io05KB6mqzc5"
       PORT: "4000"
       MIX_ENV: "prod"
-      CHAIN_ID: "333999"
-      CHAIN_SPEC_PATH: "https://raw.githubusercontent.com/polischain/polis-chains/main/specs/olympus.json"
+      CHAIN_ID: "40101"
+      CHAIN_SPEC_PATH: "https://raw.githubusercontent.com/finachain/finachain/main/specs/finachain.json"
       LINK_TO_OTHER_EXPLORER: "false"
       SHOW_PRICE_CHART: "false"
       SHOW_TXS_CHART: "true"
