@@ -19,7 +19,7 @@ function run_finachain_simple() {
     -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
     -v "$(pwd)"/keystore/:/nethermind/keystore/ \
     -v "$(pwd)"/logs/:/nethermind/logs/ \
-    ghcr.io/FinaChain/FinaChain:main
+    ghcr.io/finachain/finachain:main
 }
 
 function run_finachain_archive() {
@@ -36,7 +36,7 @@ function run_finachain_archive() {
     -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
     -v "$(pwd)"/keystore/:/nethermind/keystore/ \
     -v "$(pwd)"/logs/:/nethermind/logs/ \
-    ghcr.io/FinaChain/FinaChain:main
+    ghcr.io/finachain/finachain:main
 }
 
 function run_finachain_validator() {
@@ -73,7 +73,7 @@ function run_finachain_validator() {
     -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
     -v "$(pwd)"/keystore/:/nethermind/keystore \
     -v "$(pwd)"/logs/:/nethermind/logs/ \
-    ghcr.io/FinaChain/FinaChain:main
+    ghcr.io/finachain/finachain:main
 }
 
 function run_finachain() {
