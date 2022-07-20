@@ -5,75 +5,51 @@ NETWORK=$1
 TYPE=$2
 ACCOUNT=$3
 
-function run_sparta_simple() {
-  echo "==> Starting Polis node on SPARTA network"
+function run_finachain_simple() {
+  echo "==> Starting Fina node on FINACHAIN network"
   docker run -d --restart=always \
-    -p 30303:30303 \
-    -p 30303:30303/udp \
-    -e NETHERMIND_CONFIG=sparta \
-    -e NETHERMIND_ETHSTATSCONFIG_ENABLED="true" \
-    -e NETHERMIND_ETHSTATSCONFIG_SECRET="PhD8zsx69jhpqv7PUhzz2mExj66hT8tRknP7Rw7sCC5y79SAgQuZLW6cXUuqjRnv" \
-    -e NETHERMIND_ETHSTATSCONFIG_SERVER="wss://sparta-stats.polis.tech/api" \
-    -e NETHERMIND_ETHSTATSCONFIG_NAME="$NAME" \
-    -e NETHERMIND_MININGCONFIG_MINGASPRICE="1000000000" \
-    -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
-    -v "$(pwd)"/keystore/:/nethermind/keystore/ \
-    -v "$(pwd)"/logs/:/nethermind/logs/ \
-    ghcr.io/polischain/polis-chains:main
-}
-
-function run_sparta_validator() {
-  echo "==> Starting Polis node on SPARTA network and enabled for mining"
-	docker run -d --restart=always \
-    -p 30303:30303 \
-    -p 30303:30303/udp \
-    -e NETHERMIND_CONFIG=sparta_validator \
-    -e NETHERMIND_ETHSTATSCONFIG_ENABLED="true" \
-    -e NETHERMIND_ETHSTATSCONFIG_SECRET="PhD8zsx69jhpqv7PUhzz2mExj66hT8tRknP7Rw7sCC5y79SAgQuZLW6cXUuqjRnv" \
-    -e NETHERMIND_ETHSTATSCONFIG_SERVER="wss://sparta-stats.polis.tech/api" \
-    -e NETHERMIND_ETHSTATSCONFIG_NAME="$NAME" \
-    -e NETHERMIND_INITCONFIG_ISMINING="true" \
-    -e NETHERMIND_MININGCONFIG_ENABLED="true" \
-    -e NETHERMIND_MININGCONFIG_MINGASPRICE="1000000000" \
-    -e NETHERMIND_MININGCONFIG_TARGETBLOCKGASLIMIT="20000000" \
-    -e NETHERMIND_KEYSTORECONFIG_BLOCKAUTHORACCOUNT="$ACCOUNT" \
-    -e NETHERMIND_KEYSTORECONFIG_UNLOCKACCOUNTS="$ACCOUNT" \
-    -e NETHERMIND_KEYSTORECONFIG_PASSWORDFILES=/nethermind/passwords/"$ACCOUNT" \
-    -v "$(pwd)"/passwords/:/nethermind/passwords/ \
-    -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
-    -v "$(pwd)"/keystore/:/nethermind/keystore \
-    -v "$(pwd)"/logs/:/nethermind/logs/ \
-    ghcr.io/polischain/polis-chains:main
-}
-
-function run_olympus_simple() {
-  echo "==> Starting Polis node on OLYMPUS network"
-  docker run -d --restart=always \
-    -p 30303:30303 \
-    -p 30303:30303/udp \
-    -e NETHERMIND_CONFIG=olympus \
+    -p 40101:40101 \
+    -p 40101:40101/udp \
+    -e NETHERMIND_CONFIG=finachain \
     -e NETHERMIND_ETHSTATSCONFIG_ENABLED="true" \
     -e NETHERMIND_ETHSTATSCONFIG_SECRET="EfxqGbcCZnxBPNgqb2UcWqgJK49VnKZv" \
-    -e NETHERMIND_ETHSTATSCONFIG_SERVER="wss://netstats.polis.tech/api" \
+    -e NETHERMIND_ETHSTATSCONFIG_SERVER="wss://stats.finachain.com/api" \
     -e NETHERMIND_ETHSTATSCONFIG_NAME="$NAME" \
     -e NETHERMIND_MININGCONFIG_MINGASPRICE="1000000000" \
     -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
     -v "$(pwd)"/keystore/:/nethermind/keystore/ \
     -v "$(pwd)"/logs/:/nethermind/logs/ \
-    ghcr.io/polischain/polis-chains:main
+    ghcr.io/FinaChain/FinaChain:main
 }
 
-function run_olympus_validator() {
-  echo "==> Starting Polis node on OLYMPUS network and enabled for mining"
+function run_finachain_archive() {
+  echo "==> Starting Fina node on FINACHAIN network"
+  docker run -d --restart=always \
+    -p 40101:40101 \
+    -p 40101:40101/udp \
+    -e NETHERMIND_CONFIG=finachain_archive \
+    -e NETHERMIND_ETHSTATSCONFIG_ENABLED="true" \
+    -e NETHERMIND_ETHSTATSCONFIG_SECRET="EfxqGbcCZnxBPNgqb2UcWqgJK49VnKZv" \
+    -e NETHERMIND_ETHSTATSCONFIG_SERVER="wss://stats.finachain.com/api" \
+    -e NETHERMIND_ETHSTATSCONFIG_NAME="$NAME" \
+    -e NETHERMIND_MININGCONFIG_MINGASPRICE="1000000000" \
+    -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
+    -v "$(pwd)"/keystore/:/nethermind/keystore/ \
+    -v "$(pwd)"/logs/:/nethermind/logs/ \
+    ghcr.io/FinaChain/FinaChain:main
+}
+
+function run_finachain_validator() {
+  echo "==> Starting Fina node on FINACHAIN network and enabled for mining"
 	docker run -d --restart=always \
-    -p 30303:30303 \
-    -p 30303:30303/udp \
+    -p 40101:40101 \
+    -p 40101:40101/udp \
     -p 8545:8545 \
-    -e NETHERMIND_CONFIG=olympus_validator \
+    -e NETHERMIND_CONFIG=finachain_validator \
     -e NETHERMIND_AURACONFIG_FORCESEALING="true" \
     -e NETHERMIND_ETHSTATSCONFIG_ENABLED="true" \
     -e NETHERMIND_ETHSTATSCONFIG_SECRET="EfxqGbcCZnxBPNgqb2UcWqgJK49VnKZv" \
-    -e NETHERMIND_ETHSTATSCONFIG_SERVER="wss://netstats.polis.tech/api" \
+    -e NETHERMIND_ETHSTATSCONFIG_SERVER="wss://stats.finachain.com/api" \
     -e NETHERMIND_ETHSTATSCONFIG_NAME="$NAME" \
     -e NETHERMIND_INITCONFIG_ISMINING="true" \
     -e NETHERMIND_MININGCONFIG_ENABLED="true" \
@@ -97,55 +73,36 @@ function run_olympus_validator() {
     -v "$(pwd)"/db/:/nethermind/nethermind_db/ \
     -v "$(pwd)"/keystore/:/nethermind/keystore \
     -v "$(pwd)"/logs/:/nethermind/logs/ \
-    ghcr.io/polischain/polis-chains:main
+    ghcr.io/FinaChain/FinaChain:main
 }
 
-function run_sparta() {
+function run_finachain() {
 case "$TYPE" in
 "validator")
-  echo "==> Running a node for SPARTA configured with validator configuration"
+  echo "==> Running a node for FINACHAIN configured with validator configuration"
   echo "==> Checking docker installation..."
   bash scripts/docker.sh &> /dev/null
   if [ "$ACCOUNT" == "" ]
     then
       echo "Please specify the account used to sign blocks as the third argument (./run.sh sparta validator 0x123...123"
     else
-      run_sparta_validator
+      run_finachain_validator
   fi
 ;;
 "node")
-  echo "==> Running a simple node for SPARTA"
+  echo "==> Running a simple node for FINACHAIN"
   echo "==> Checking docker installation..."
   bash scripts/docker.sh &> /dev/null
-  run_sparta_simple
+  run_finachain_simple
+;;
+"node-archive")
+  echo "==> Running a archive node for FINACHAIN"
+  echo "==> Checking docker installation..."
+  bash scripts/docker.sh &> /dev/null
+  run_finachain_archive
 ;;
 *)
-echo "Unknown configuration type for SPARTA please specify a node setup: rpc, explorer, validator, node"
-    ;;
-esac
-}
-
-function run_olympus() {
-case "$TYPE" in
-"validator")
-  echo "==> Running a node for OLYMPUS configured with validator configuration"
-  echo "==> Checking docker installation..."
-  bash scripts/docker.sh &> /dev/null
-  if [ "$ACCOUNT" == "" ]
-    then
-      echo "Please specify the account used to sign blocks as the third argument (./run.sh sparta validator 0x123...123"
-    else
-      run_olympus_validator
-  fi
-;;
-"node")
-  echo "==> Running a simple node for OLYMPUS"
-  echo "==> Checking docker installation..."
-  bash scripts/docker.sh &> /dev/null
-  run_olympus_simple
-;;
-*)
-echo "Unknown configuration type for OLYMPUS please specify a node setup: rpc, explorer, validator, node"
+echo "Unknown configuration type for FINACHAIN please specify a node setup: rpc, explorer, validator, node"
     ;;
 esac
 }
@@ -164,17 +121,14 @@ function run_gen() {
 function run() {
   echo "==> Running a node for $NETWORK configured for  $TYPE"
 case "$NETWORK" in
-"sparta")
-      run_sparta
-;;
-"olympus")
-      run_olympus
+"finachain")
+      run_finachain
 ;;
 "generate")
       run_gen
 ;;
 *)
-    echo "Unknown network, please specify sparta (for testnet) or olympus (for mainnet)"
+    echo "Unknown network, please specify 'finachain' for mainnet or 'generate' to generate a new key with a random password"
     exit
     ;;
 esac
