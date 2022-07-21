@@ -2,8 +2,6 @@ const hre = require("hardhat");
 const Web3 = require('web3');
 const BN = Web3.utils.BN;
 
-const DAO_MULTISIG = process.env.DAO_MULTISIG;
-
 async function main() {
     const [owner] = await hre.ethers.getSigners();
 
@@ -183,31 +181,6 @@ async function main() {
     
     console.log("Setting initial validator stakes");    
     tx = await stakingProxyAccess.initialValidatorStake(mintAmount.toString(10))
-    await tx.wait()
-
-    console.log("==> Setting POSDAO ownership to DAO multi-signature account")
-    tx = await validatorSetProxy.changeAdmin(DAO_MULTISIG)
-    await tx.wait()
-
-    tx = await blockRewardProxy.changeAdmin(DAO_MULTISIG)
-    await tx.wait()
-
-    tx = await randomProxy.changeAdmin(DAO_MULTISIG)
-    await tx.wait()
-
-    tx = await stakingProxy.changeAdmin(DAO_MULTISIG)
-    await tx.wait()
-
-    tx = await governanceProxy.changeAdmin(DAO_MULTISIG)
-    await tx.wait()
-
-    tx = await txPermissionProxy.changeAdmin(DAO_MULTISIG)
-    await tx.wait()
-
-    tx = await certifierProxy.changeAdmin(DAO_MULTISIG)
-    await tx.wait()
-
-    tx = await registry.setOwner(DAO_MULTISIG)
     await tx.wait()
 
     console.log("\n AuRa Deployment Finished: \n")
