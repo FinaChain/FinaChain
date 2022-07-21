@@ -8,10 +8,10 @@ services:
       - postgres
     environment:
       DATABASE_URL: "postgresql://blockscout:let-me-in@host.docker.internal:5432/blockscout?ssl=false"
-      COIN: "fina"
+      COIN: "FNA"
       NETWORK: "FinaChain"
       SUBNETWORK: "Main"
-      LOGO: "/images/fina_logo.svg"
+      LOGO: "/images/finachain_logo.svg"
       BLOCKSCOUT_HOST: "finascan.io"
       COINGECKO_COIN_ID: "fina"
       VALIDATORS_CONTRACT: "0x636278bAd2D76AAC5E9bAcfd185687c8901063E9"
