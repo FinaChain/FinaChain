@@ -1,13 +1,13 @@
 version: '3.7'
 services:
   blockscout:
-    image: ghcr.io/finachain/blockscout:master
+    image: ghcr.io/finachain/blockscout:latest
     ports:
       - '4000:4000'
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: "postgresql://blockscout:let-me-in@host.docker.internal:5432/blockscout?ssl=false"
+      DATABASE_URL: "postgresql://postgres:@host.docker.internal:5432/blockscout?ssl=false"
       COIN: "FNA"
       NETWORK: "FinaChain"
       SUBNETWORK: "Main"
@@ -34,17 +34,17 @@ services:
       ENABLE_POS_STAKING_IN_MENU: "true"
       GAS_PRICE: "1"
       POS_STAKING_CONTRACT: "0xF69e9147d88De50c4Bd42F9b41Cbce00841Cc2Dd"
-    command: bash -c "mix do ecto.migrate && mix phx.server"
+      ECTO_USE_SSL: "false"
+    command: "mix do ecto.create, ecto.migrate, phx.server"
     extra_hosts:
       - "host.docker.internal:host-gateway"
   postgres:
-    image: postgres:13
+    image: postgres:13.6
     ports:
-      - '5432:5432'
-    command: ["postgres", "-cshared_preload_libraries=pg_stat_statements"]
+      - "5432:5432"
     environment:
-      POSTGRES_USER: blockscout
-      POSTGRES_PASSWORD: let-me-in
-      POSTGRES_DB: blockscout
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: ""
+      POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
