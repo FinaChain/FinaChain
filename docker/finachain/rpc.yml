@@ -21,7 +21,7 @@ services:
       NETHERMIND_HEALTHCHECKSCONFIG_ENABLED: "true"
       NETHERMIND_HEALTHCHECKSCONFIG_MAXINTERVALWITHOUTPROCESSEDBLOCK: 20
     ports:
-      - "${IP}:8545:8545"
+      - "${IP}:8080:8545"
       - "40101:40101"
       - "40101:40101/udp"
     restart: always
