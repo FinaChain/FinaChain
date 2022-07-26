@@ -5,7 +5,6 @@ services:
     container_name: node
     image: ghcr.io/finachain/finachain:main
     user: root
-    network_mode: host
     volumes:
       - ./node_data/db:/nethermind/nethermind_db/
       - ./node_data/keystore/:/nethermind/keystore

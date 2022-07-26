@@ -5,7 +5,6 @@ services:
     container_name: validator
     image: ghcr.io/finachain/finachain:main
     user: root
-    network_mode: host
     volumes:
       - ../../passwords/:/nethermind/passwords
       - ../../db/:/nethermind/nethermind_db
