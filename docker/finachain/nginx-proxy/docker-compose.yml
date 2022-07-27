@@ -5,9 +5,12 @@ services:
     image: nginx:latest
     ports:
       - '443:443'
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    networks:
+      - proxy
     volumes:
       - ./ssl:/etc/nginx/ssl
       - ./log:/var/log/nginx
       - ./config:/etc/nginx/conf.d
+networks:
+  proxy:
+    driver: bridge
