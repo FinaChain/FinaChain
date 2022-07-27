@@ -26,8 +26,6 @@ services:
       - "8545:8545"
       - "40101:40101"
       - "40101:40101/udp"
-    networks:
-      - proxy
     restart: always
 
 
@@ -83,8 +81,6 @@ services:
 
 networks:
   metrics:
-    driver: bridge
-  proxy:
     driver: bridge
 
 volumes:

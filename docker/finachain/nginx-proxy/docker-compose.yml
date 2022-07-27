@@ -5,12 +5,9 @@ services:
     image: nginx:latest
     ports:
       - '443:443'
-    networks:
-      - proxy
+    extra_hosts:
+      - "${NGINX_PROXY_HOST}:${NGINX_PROXY_IP}"      
     volumes:
       - ./ssl:/etc/nginx/ssl
       - ./log:/var/log/nginx
       - ./config:/etc/nginx/conf.d
-networks:
-  proxy:
-    driver: bridge
