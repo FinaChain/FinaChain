@@ -1,0 +1,9 @@
+# SSL Certificates
+ssl/*.crt
+ssl/*.key
+
+# Log files
+log/*.log
+
+# Configs
+config/*.conf

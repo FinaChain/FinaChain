@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  proxy:
+    container_name: nginx_proxy
+    image: nginx:latest
+    ports:
+      - '443:443'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./ssl:/etc/nginx/ssl
+      - ./log:/var/log/nginx
+      - ./config:/etc/nginx/conf.d
