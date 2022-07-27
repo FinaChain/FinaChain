@@ -36,7 +36,7 @@ RUN if [ "$TARGETARCH" = "amd64" ] ; \
 
 WORKDIR /nethermind
 
-COPY --from=build /out .
+COPY --from=build /nethermind/out .
 
 EXPOSE 8545
 EXPOSE 40101
