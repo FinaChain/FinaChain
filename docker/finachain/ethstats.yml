@@ -2,7 +2,6 @@ version: '3.7'
 services:
   ethstats:
     image: ghcr.io/finachain/ethstats-server:master
-    ports:
-      - '8081:3000'
+    network_mode: host
     environment:
       WS_SECRET: ${ETHSTATS_KEY}
