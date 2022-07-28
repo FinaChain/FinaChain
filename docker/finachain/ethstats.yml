@@ -3,6 +3,6 @@ services:
   ethstats:
     image: ghcr.io/finachain/ethstats-server:master
     ports:
-      - '3000:8081'
+      - '8081:3000'
     environment:
       WS_SECRET: ${ETHSTATS_KEY}
