@@ -2,8 +2,7 @@ version: '3.7'
 services:
   blockscout:
     image: ghcr.io/finachain/blockscout:latest
-    ports:
-      - '4000:4000'
+    network_mode: host
     depends_on:
       - postgres
     environment:
