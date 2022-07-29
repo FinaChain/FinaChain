@@ -20,8 +20,5 @@ services:
       NETHERMIND_JSONRPCCONFIG_HOST: "0.0.0.0"
       NETHERMIND_HEALTHCHECKSCONFIG_ENABLED: "true"
       NETHERMIND_HEALTHCHECKSCONFIG_MAXINTERVALWITHOUTPROCESSEDBLOCK: 20
-    ports:
-      - "${IP}:8080:8545"
-      - "40101:40101"
-      - "40101:40101/udp"
+    network_mode: host
     restart: always
