@@ -174,6 +174,14 @@ async function main() {
     )
     await tx.wait()
     
+    console.log("Setting block reward contract")
+    tx = erc677BridgeTokenRewardable.setBlockRewardContract(blockRewardProxy.address);
+    await tx.wait()
+    
+    console.log("Setting staking contract")
+    tx = erc677BridgeTokenRewardable.setStakingContract(stakingProxy.address);
+    await tx.wait()
+    
     console.log("Mint and stake initial tokens");
     const mintAmount = (new BN(process.env.CANDIDATE_MIN_STAKE)).mul(new BN(initial_stakers.length))
     tx = await erc677BridgeTokenRewardable.mint(stakingProxy.address, mintAmount.toString(10))
