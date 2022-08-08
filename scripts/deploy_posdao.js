@@ -175,11 +175,11 @@ async function main() {
     await tx.wait()
     
     console.log("Setting block reward contract")
-    tx = erc677BridgeTokenRewardable.setBlockRewardContract(blockRewardProxy.address);
+    tx = await erc677BridgeTokenRewardable.setBlockRewardContract(blockRewardProxy.address);
     await tx.wait()
     
     console.log("Setting staking contract")
-    tx = erc677BridgeTokenRewardable.setStakingContract(stakingProxy.address);
+    tx = await erc677BridgeTokenRewardable.setStakingContract(stakingProxy.address);
     await tx.wait()
     
     console.log("Mint and stake initial tokens");
