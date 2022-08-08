@@ -33,6 +33,6 @@ services:
       NETHERMIND_KEYSTORECONFIG_PASSWORDFILES: /nethermind/passwords/$ACCOUNT
       NETHERMIND_JSONRPCCONFIG_ENABLED: "true"
     ports:
-      - "40101"
+      - "40101:40101"
+      - "40101:40101/udp"
     restart: always
-
