@@ -863,7 +863,7 @@ contract ERC677MultiBridgeSwapableToken is ERC677MultiBridgeToken {
       uint8 _decimals,
       uint256 _chainId
   ) ERC677MultiBridgeToken(_name, _symbol, _decimals, _chainId) public {
-      swapContract = msg.sender;
+    // solhint-disable-previous-line no-empty-blocks
   }
 
   modifier onlySwapContract() {
@@ -871,16 +871,14 @@ contract ERC677MultiBridgeSwapableToken is ERC677MultiBridgeToken {
     _;
   }
 
-
-  function changeSwapContract(address _newSwapContract) public onlyOwner {
-    _changeSwapContract(_newSwapContract);
+  function setSwapContract(address _swapContract) external onlyOwner {
+    _setSwapContract(_swapContract);
   }
 
-
-  function _changeSwapContract(address _newSwapContract) internal {
-    require(_newSwapContract != address(0));
-    emit OwnershipTransferred(swapContract, _newSwapContract);
-    swapContract = _newSwapContract;
+  function _setSwapContract(address _swapContract) internal {
+    require(_swapContract != address(0));
+    emit SwapContractChanged(swapContract, _swapContract);
+    swapContract = _swapContract;
   }
   
   event SwapExecuted(
@@ -889,7 +887,7 @@ contract ERC677MultiBridgeSwapableToken is ERC677MultiBridgeToken {
   );
   
   function swap(address _to, uint256 _amount) 
-  public 
+  public
   onlySwapContract
   returns (bool)
   {
@@ -897,7 +895,7 @@ contract ERC677MultiBridgeSwapableToken is ERC677MultiBridgeToken {
     balances[_to] = balances[_to].add(_amount);
     emit Mint(_to, _amount);
     emit Transfer(address(0), _to, _amount);
-	emit SwapExecuted(_to, _amount);
+    emit SwapExecuted(_to, _amount);
     return true;
   }
 }
