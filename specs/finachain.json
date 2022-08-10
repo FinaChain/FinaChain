@@ -14,25 +14,27 @@
                 "0x3c938a57D08DFd770706AA448928FD0511eb2Dba"
               ]
             },
-            "5000": {
+            "250": {
               "contract": "0x702BbdDE73d4fA0BC0E506ef69A65950586CaFD6"
             }
           }
         },
         "blockRewardContractAddress": "0x22972ce4425Cb65cc6fA69243D01e03264ef7bfa",
-        "blockRewardContractTransition": 5000,
+        "blockRewardContractTransition": 250,
         "randomnessContractAddress": {
-          "5000": "0xe671607421240c3B943fa2711B4175624e45fe9B"
+          "250": "0xe671607421240c3B943fa2711B4175624e45fe9B"
         },
-        "posdaoTransition": 5000
+        "posdaoTransition": 250
       }
     }
   },
   "nodes": [
         "enode://a953164a15948e0549c7e536fdf9ef83a237b14e461e9839238c99d5902a6f8a533ec19a6b1851f3e681fb0b3ec4bac8c255088300dbaf38b8ad032cef8e8a66@212.227.118.156:40101",
         "enode://aceb576f60ba029c3d14b8fa523e3d40e025b15f1b6785880d85c92cc14c2b519d8d0df36458b75c2551591679f48b5c9e4c31cc8c7fd6dda9d35b334571801d@212.227.118.149:40101",
+        "enode://7d4531115e787f10626cdd1fa5bc6f60e76767e4e906891054f6dfd0d0f09233765297c9c88ea9f82d7600f818f1ecbe1e836ccaab3130b008cd6556af6d637f@212.227.118.176:40101",
         "enode://2d9ecdb5a09e638714f761680b825cf6b4cca8fc0e91cea52b0d596fbc7c187285fc235371dd61d2611e296ecad632f29494d72ab6da1c07e0fef5ca55a00c2d@212.227.118.153:40101",
-		"enode://f7309bb324c8e9eb96cfec286e82ed86d675d30c8179ab3339eccf40c099853c5f367a221e85eb743957a68a5d6a5841d96fa38c365d7f4daa7cd1be1beedb17@212.227.51.8:40101"
+        "enode://f7309bb324c8e9eb96cfec286e82ed86d675d30c8179ab3339eccf40c099853c5f367a221e85eb743957a68a5d6a5841d96fa38c365d7f4daa7cd1be1beedb17@212.227.51.8:40101",
+        "enode://f5e7bc738198179492879f8a2270fe4123d619740bf832063a4022cf63e704ebef115326afab87aaef18785d4124530b092f6087df678c78e76dd64fc8d218c6@212.227.118.177:40101"
   ],
   "params": {
     "gasLimitBoundDivisor": "0x400",
@@ -56,7 +58,7 @@
     "eip3607Transition": "0xFFFFFFFFFFFF",
     "registrar": "0x151894fd8DDb36aCFc0bEd266a4DeE3a8352DBa8",
     "transactionPermissionContract": "0xD78f745f90F13530077F7C51cF8B6e53f1621Fbc",
-    "transactionPermissionContractTransition": 5000
+    "transactionPermissionContractTransition": 250
   },
   "genesis": {
     "seal": {
