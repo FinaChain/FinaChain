@@ -2,7 +2,7 @@
 
 FINASCAN_EXPLORER="https://finascan.io/"
 
-FETCH_LAST_BLOCK_ENDPOINT="api/?module=block&action=eth_block_number"
+FETCH_LAST_BLOCK_ENDPOINT="api?module=block&action=eth_block_number"
 BLOCK_DATA_ENDPOINT="graphiql"
 
 function fetch_block_data() {
