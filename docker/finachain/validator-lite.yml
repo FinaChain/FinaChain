@@ -12,7 +12,7 @@ services:
       - ../../logs/:/nethermind/logs/
       - ./NLog.config:/nethermind/NLog.config
     environment:
-      NETHERMIND_CONFIG: "finachain_archive_validator"
+      NETHERMIND_CONFIG: "finachain_validator"
       NETHERMIND_AURACONFIG_FORCESEALING: "true"
       NETHERMIND_ETHSTATSCONFIG_ENABLED: "true"
       NETHERMIND_ETHSTATSCONFIG_SECRET: ${ETHSTATS_KEY}
