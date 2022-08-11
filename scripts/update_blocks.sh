@@ -1,7 +1,6 @@
 #!/bin/bash
 
-SPARTA_EXPLORER="https://sparta-explorer.polis.tech/"
-OLYMPUS_EXPLORER="https://explorer.polis.tech/"
+FINASCAN_EXPLORER="https://finascan.io/"
 
 FETCH_LAST_BLOCK_ENDPOINT="api/?module=block&action=eth_block_number"
 BLOCK_DATA_ENDPOINT="graphiql"
@@ -23,49 +22,20 @@ function fetch_last_block() {
   fetch_block_data "$1" "$BLOCK_NUMBER"
 }
 
-function update_sparta() {
-  sed -i 's/\"PivotNumber\":.*/\"PivotNumber\": '"$BLOCK_NUMBER"',/g' "./specs/configs/sparta.cfg"
-  sed -i 's/\"PivotHash\":.*/\"PivotHash\": "'"$BLOCK_HASH"'",/g' "./specs/configs/sparta.cfg"
-  sed -i 's/\"PivotTotalDifficulty\":.*/\"PivotTotalDifficulty\": "'"$BLOCK_TOTAL_DIFFICULTY"'",/g' "./specs/configs/sparta.cfg"
+function update_finachain() {
+  sed -i 's/\"PivotNumber\":.*/\"PivotNumber\": '"$BLOCK_NUMBER"',/g' "./specs/configs/finachain.cfg"
+  sed -i 's/\"PivotHash\":.*/\"PivotHash\": "'"$BLOCK_HASH"'",/g' "./specs/configs/finachain.cfg"
+  sed -i 's/\"PivotTotalDifficulty\":.*/\"PivotTotalDifficulty\": "'"$BLOCK_TOTAL_DIFFICULTY"'",/g' "./specs/configs/finachain.cfg"
 
-  sed -i 's/\"PivotNumber\":.*/\"PivotNumber\": '"$BLOCK_NUMBER"',/g' "./specs/configs/sparta_validator.cfg"
-  sed -i 's/\"PivotHash\":.*/\"PivotHash\": "'"$BLOCK_HASH"'",/g' "./specs/configs/sparta_validator.cfg"
-  sed -i 's/\"PivotTotalDifficulty\":.*/\"PivotTotalDifficulty\": "'"$BLOCK_TOTAL_DIFFICULTY"'",/g' "./specs/configs/sparta_validator.cfg"
+  sed -i 's/\"PivotNumber\":.*/\"PivotNumber\": '"$BLOCK_NUMBER"',/g' "./specs/configs/finachain_validator.cfg"
+  sed -i 's/\"PivotHash\":.*/\"PivotHash\": "'"$BLOCK_HASH"'",/g' "./specs/configs/finachain_validator.cfg"
+  sed -i 's/\"PivotTotalDifficulty\":.*/\"PivotTotalDifficulty\": "'"$BLOCK_TOTAL_DIFFICULTY"'",/g' "./specs/configs/finachain_validator.cfg"
 }
 
-function update_olympus() {
-  sed -i 's/\"PivotNumber\":.*/\"PivotNumber\": '"$BLOCK_NUMBER"',/g' "./specs/configs/olympus.cfg"
-  sed -i 's/\"PivotHash\":.*/\"PivotHash\": "'"$BLOCK_HASH"'",/g' "./specs/configs/olympus.cfg"
-  sed -i 's/\"PivotTotalDifficulty\":.*/\"PivotTotalDifficulty\": "'"$BLOCK_TOTAL_DIFFICULTY"'",/g' "./specs/configs/olympus.cfg"
-
-  sed -i 's/\"PivotNumber\":.*/\"PivotNumber\": '"$BLOCK_NUMBER"',/g' "./specs/configs/olympus_validator.cfg"
-  sed -i 's/\"PivotHash\":.*/\"PivotHash\": "'"$BLOCK_HASH"'",/g' "./specs/configs/olympus_validator.cfg"
-  sed -i 's/\"PivotTotalDifficulty\":.*/\"PivotTotalDifficulty\": "'"$BLOCK_TOTAL_DIFFICULTY"'",/g' "./specs/configs/olympus_validator.cfg"
-}
-
-function fetch_sparta() {
-  fetch_last_block "$SPARTA_EXPLORER"
-  update_sparta
-}
-
-function fetch_olympus() {
-  fetch_last_block "$OLYMPUS_EXPLORER"
-  update_olympus
+function fetch_finachain() {
+  fetch_last_block "$FINASCAN_EXPLORER"
+  update_finachain
 }
 
 
-run() {
-case "$1" in
-"sparta")
-  fetch_sparta
-;;
-"olympus")
-  fetch_olympus
-;;
-*)
-echo "Please specify a network (sparta or olympus)"
-;;
-esac
-}
-
-run "$1"
+fetch_finachain
