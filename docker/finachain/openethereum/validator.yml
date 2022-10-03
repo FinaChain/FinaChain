@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  node:
+    init: true
+    container_name: node
+    image: ghcr.io/finachain/openethereum:main
+    user: root
+    command:
+      --chain=finachain
+      --base-path=/root/data
+      --pruning=archive
+      --max-peers="100"
+      --no-jsonrpc
+      --fat-db="off"
+      --tracing="off"
+      --no-ws
+      --author=$ACCOUNT
+      --engine-signer=$ACCOUNT
+      --unlock=$ACCOUNT
+      --password="/root/password/$ACCOUNT"      
+      --logging="engine=info,miner=info,rpc=info"
+    volumes:
+      - ./node_data:/root/data
+      - ./passwords:/root/password
+      - ./keys:/root/data/keys/finachain
+    ports:
+      - "40101:40101"
+      - "40101:40101/udp"
+    restart: always
