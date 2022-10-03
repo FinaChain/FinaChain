@@ -22,7 +22,6 @@ services:
     volumes:
       - ./node_data:/root/data
       - ./passwords:/root/password
-      - ./keys:/root/data/keys/finachain
     ports:
       - "40101:40101"
       - "40101:40101/udp"
