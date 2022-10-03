@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  node:
+    init: true
+    container_name: node
+    image: ghcr.io/finachain/openethereum:main
+    user: root
+    command:
+      --chain=finachain
+      --base-path=/root/data
+      --pruning=archive
+      --max-peers="100"
+      --jsonrpc-port="8545"
+      --jsonrpc-cors=all
+      --jsonrpc-interface=all
+      --jsonrpc-hosts=all
+      --jsonrpc-apis=safe
+      --fat-db="off"
+      --tracing="off"
+      --ws-port="8546"
+      --ws-interface=all
+      --ws-apis=safe
+      --ws-origins=all
+      --ws-hosts=all
+      --logging="engine=info,miner=info,rpc=info"
+    volumes:
+      - ./node_data:/root/data
+      - ./passwords:/root/password
+      - ./keys:/root/data/keys/finachain
+    network_mode: host
+    restart: always

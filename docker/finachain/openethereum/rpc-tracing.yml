@@ -14,22 +14,18 @@ services:
       --jsonrpc-cors=all
       --jsonrpc-interface=all
       --jsonrpc-hosts=all
-      --jsonrpc-apis=all
+      --jsonrpc-apis="safe,traces"
       --fat-db="on"
       --tracing="on"
       --ws-port="8546"
-      --ws-interface all
-      --ws-apis=all
-      --ws-origins all
-      --ws-hosts all
-      --logging="engine=trace,miner=trace,rpc=info"
+      --ws-interface=all
+      --ws-apis="safe,traces"
+      --ws-origins=all
+      --ws-hosts=all
+      --logging="engine=info,miner=info,rpc=info"
     volumes:
       - ./node_data:/root/data
       - ./passwords:/root/password
       - ./keys:/root/data/keys/finachain
-    ports:
-      - "8546:8546"
-      - "8545:8545"
-      - "40101:40101"
-      - "40101:40101/udp"
+    network_mode: host
     restart: always
