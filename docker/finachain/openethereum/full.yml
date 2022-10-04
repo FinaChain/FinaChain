@@ -7,13 +7,16 @@ services:
     user: root
     command:
       --chain=finachain
+      --port=40101
+      --nat="extip:$EXTERNAL_IP"      
+      --node-key=$NODE_KEY
       --base-path=/root/data
       --pruning=archive
-      --max-peers="500"
+      --max-peers="100"
       --no-jsonrpc
       --fat-db="off"
       --tracing="off"
-      --no-ws   
+      --no-ws
       --logging="engine=info,miner=info,rpc=info"
     volumes:
       - ./node_data:/root/data
