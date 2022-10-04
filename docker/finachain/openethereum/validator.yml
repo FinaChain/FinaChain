@@ -21,6 +21,7 @@ services:
       --engine-signer=$ACCOUNT
       --unlock=$ACCOUNT
       --password="/root/password/$ACCOUNT"
+      --force-sealing
       --logging="engine=info,miner=info,rpc=info"
     volumes:
       - ./node_data:/root/data
