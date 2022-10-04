@@ -9,6 +9,10 @@ services:
       --chain=finachain
       --port=40101
       --base-path=/root/data
+      --min-gas-price="1100000000000000000"
+      --gas-floor-target="1100000000000000000"
+      --gas-cap="500000000000000000000"
+      --tx-queue-no-unfamiliar-locals      
       --pruning=archive
       --max-peers="100"
       --jsonrpc-port="8545"
