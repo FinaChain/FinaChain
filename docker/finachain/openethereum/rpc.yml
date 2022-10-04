@@ -10,12 +10,12 @@ services:
       - "node"
     environment:
       NODE_ENV: production
-      RPC_HOST: node
+      RPC_HOST: ${ETHSTATS_RPC_NODE}
       RPC_PORT: 8545
       LISTENING_PORT: 40101
-      CONTACT_DETAILS: "https://t.me/finatoken"
+      CONTACT_DETAILS: ${ETHSTATS_CONTACT}
       INSTANCE_NAME: ${ETHSTATS_ID}
-      WS_SERVER: "wss://stats.finachain.com/api"
+      WS_SERVER: ${ETHSTATS_WS}
       WS_SECRET: ${ETHSTATS_KEY}
       VERBOSITY: 1
     restart: always
