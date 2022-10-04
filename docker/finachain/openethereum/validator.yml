@@ -1,5 +1,29 @@
 version: '3.7'
 services:
+  agent:
+    init: true
+    container_name: ethstats-agent
+    image: xdaichain/ethstats-agent:latest
+    links:
+      - "node"
+    depends_on:
+      - "node"
+    environment:
+      NODE_ENV: production
+      RPC_HOST: node
+      RPC_PORT: 8545
+      LISTENING_PORT: 40101
+      CONTACT_DETAILS: "https://t.me/finatoken"
+      INSTANCE_NAME: ${ETHSTATS_ID}
+      WS_SERVER: "wss://stats.finachain.com/api"
+      WS_SECRET: ${ETHSTATS_KEY}
+      VERBOSITY: 1
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
   node:
     init: true
     container_name: node
@@ -13,10 +37,14 @@ services:
       --base-path=/root/data
       --pruning=archive
       --max-peers="100"
-      --no-jsonrpc
       --fat-db="off"
       --tracing="off"
-      --no-ws
+      --jsonrpc-port="8545"
+      --jsonrpc-cors=all
+      --jsonrpc-interface=all
+      --jsonrpc-hosts=all
+      --jsonrpc-apis=safe
+      --no-ws      
       --author=$ACCOUNT
       --engine-signer=$ACCOUNT
       --unlock=$ACCOUNT
@@ -27,6 +55,8 @@ services:
       - ./node_data:/root/data
       - ./passwords:/root/password
     ports:
+      - "8546:8546"
+      - "8545:8545"    
       - "40101:40101"
       - "40101:40101/udp"
     restart: always
