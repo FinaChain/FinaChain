@@ -32,6 +32,7 @@ services:
     command:
       --chain=finachain
       --port=40101
+      --min-gas-price="1100000000"
       --nat="extip:$EXTERNAL_IP"      
       --node-key=$NODE_KEY
       --base-path=/root/data
