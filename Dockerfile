@@ -5,7 +5,7 @@ ARG TARGETOS
 ARG TARGETARCH
 ARG BUILDPLATFORM
 
-RUN git clone https://github.com/NethermindEth/nethermind --branch 1.13.4 --recursive
+RUN git clone https://github.com/FinaChain/nethermind --branch FinaChain-1.0 --recursive
 
 WORKDIR /nethermind
 
